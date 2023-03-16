@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">unitconverter</string>
+    <string-array name="values">
+        <item>KM</item>
+        <item>M</item>
+        <item>CM</item>
+        <item>IN</item>
+        <item>L</item>
+        <item>ML</item>
+        <item>BBL</item>
+        <item>KG</item>
+        <item>G</item>
+        <item>LB</item>
+        <item>K</item>
+        <item>C</item>
+        <item>F</item>
+
+
+    </string-array>
+</resources>
