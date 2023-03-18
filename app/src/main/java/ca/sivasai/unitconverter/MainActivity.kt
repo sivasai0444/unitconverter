@@ -110,62 +110,105 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.submit.setOnClickListener {
-            if(binding.spinner1.selectedItem.toString()=="K" && binding.spinner2.selectedItem.toString()=="M"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*1000.0).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="K" && binding.spinner2.selectedItem.toString()=="CM"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*100000.0).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="K" && binding.spinner2.selectedItem.toString()=="IN"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*39370.1).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="M" && binding.spinner2.selectedItem.toString()=="CM"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*100.0).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="M" && binding.spinner2.selectedItem.toString()=="IN"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*39.3701).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="M" && binding.spinner2.selectedItem.toString()=="KM"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.001).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="CM" && binding.spinner2.selectedItem.toString()=="IN"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.393701).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="CM" && binding.spinner2.selectedItem.toString()=="M"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.01).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="CM" && binding.spinner2.selectedItem.toString()=="KM"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.00001).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="IN" && binding.spinner2.selectedItem.toString()=="KM"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.0000254).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="IN" && binding.spinner2.selectedItem.toString()=="CM"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*2.54).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="IN" && binding.spinner2.selectedItem.toString()=="M"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.0254).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="L" && binding.spinner2.selectedItem.toString()=="ML"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*1000).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="L" && binding.spinner2.selectedItem.toString()=="BBL"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.00628981).toString()
+            val input = binding.editText1.text.toString().toDoubleOrNull()
+
+            if (input == null) {
+                binding.textView2.text = ""
+                return@setOnClickListener
             }
 
-            else if(binding.spinner1.selectedItem.toString()=="ML" && binding.spinner2.selectedItem.toString()=="L"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*0.001).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="ML" && binding.spinner2.selectedItem.toString()=="BBL"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*6.28981).toString()
-            }else if(binding.spinner1.selectedItem.toString()=="BBL" && binding.spinner2.selectedItem.toString()=="ML"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*158987).toString()
-            }
-            else if(binding.spinner1.selectedItem.toString()=="BBL" && binding.spinner2.selectedItem.toString()=="L"){
-                binding.textView2.text = (binding.editText1.editableText.toString().toDouble()*158.987).toString()
+            val fromUnit = binding.spinner1.selectedItem.toString()
+            val toUnit = binding.spinner2.selectedItem.toString()
+            var result = input
+
+            when (fromUnit) {
+                "KM" -> {
+                    when (toUnit) {
+                        "M" -> result *= 1000.0
+                        "CM" -> result *= 100000.0
+                        "IN" -> result *= 39370.1
+                    }
+                }
+                "M" -> {
+                    when (toUnit) {
+                        "CM" -> result *= 100.0
+                        "IN" -> result *= 39.3701
+                        "KM" -> result *= 0.001
+                    }
+                }
+                "CM" -> {
+                    when (toUnit) {
+                        "IN" -> result *= 0.393701
+                        "M" -> result *= 0.01
+                        "KM" -> result *= 0.00001
+                    }
+                }
+                "IN" -> {
+                    when (toUnit) {
+                        "KM" -> result *= 0.0000254
+                        "CM" -> result *= 2.54
+                        "M" -> result *= 0.0254
+                    }
+                }
+                "L" -> {
+                    when (toUnit) {
+                        "ML" -> result *= 1000.0
+                        "BBL" -> result *= 0.00628981
+                    }
+                }
+                "ML" -> {
+                    when (toUnit) {
+                        "L" -> result *= 0.001
+                        "BBL" -> result *= 6.28981
+                    }
+                }
+                "BBL" -> {
+                    when (toUnit) {
+                        "L" -> result *= 158.987
+                        "ML" -> result *= 158987.0
+                    }
+                }
+                "KG" -> {
+                    when (toUnit) {
+                        "G" -> result *=1000
+                        "LB" -> result *= 2.20462
+                    }
+                }
+                "G" -> {
+                    when (toUnit) {
+                        "KG" -> result *= 0.001
+                        "LB" -> result *= 0.00220462
+                    }
+                }
+                "LB" -> {
+                    when (toUnit) {
+                        "G" -> result *= 453.592
+                        "KG" -> result *= 0.453592
+                    }
+                }
+                "K" -> {
+                    when (toUnit) {
+                        "C" -> result-=273.15
+                        "F" -> result = (result- 273.15) *9/5 +32
+                    }
+                }
+                "C" -> {
+                    when (toUnit) {
+                        "K" -> result +=273.15
+                        "F" -> result = result *9/5 +32
+                    }
+                }
+                "F" -> {
+                    when (toUnit) {
+                        "C" -> result = (result - 32)* 5/9
+                        "K" -> result =(result - 32) * 5/9 + 273.15
+                    }
+                }
             }
 
+            binding.textView2.text = result.toString()
         }
+
 
     }
 
